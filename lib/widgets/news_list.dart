@@ -23,7 +23,7 @@ class _News extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(vertical: 1),
       child: Column(
         children: [
           _CardTopBar(news: news, index: index),
@@ -32,7 +32,7 @@ class _News extends StatelessWidget {
           _CardBody(news: news),
           _CardBottom(),
           const SizedBox(
-            height: 10,
+            height: 3,
           ),
           const Divider()
         ],
@@ -75,8 +75,7 @@ class _CardTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(children: [
         Text(
           '${index + 1}.',
@@ -86,7 +85,13 @@ class _CardTopBar extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text((news.author != null) ? '${news.author}' : 'no author')
+        Expanded(
+          child: Text(
+            (news.author != null) ? '${news.author}' : '',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        )
       ]),
     );
   }
@@ -98,7 +103,7 @@ class _CardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Text(
         news.title,
         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -120,6 +125,10 @@ class _CardImage extends StatelessWidget {
         child: Container(
             child: (news.urlToImage != null)
                 ? FadeInImage(
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return const Image(
+                          image: AssetImage('assets/images/no-image.png'));
+                    },
                     placeholder: const AssetImage('assets/images/giphy.gif'),
                     image: NetworkImage('${news.urlToImage}'))
                 : const Image(image: AssetImage('assets/images/no-image.png'))),
@@ -135,6 +144,12 @@ class _CardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text((news.description != null) ? '${news.description}' : '');
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Text(
+        (news.description != null) ? '${news.description}' : '',
+        textAlign: TextAlign.justify,
+      ),
+    );
   }
 }
