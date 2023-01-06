@@ -9,7 +9,7 @@ class NavigationModel with ChangeNotifier {
   set currentPage(int value) {
     _currentPage = value;
     _pageController.animateToPage(value,
-        duration: const Duration(milliseconds: 250), curve: Curves.bounceOut);
+        duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
     notifyListeners();
   }
 
