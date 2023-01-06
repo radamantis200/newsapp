@@ -5,6 +5,6 @@ class Tab2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("tab2");
+    return const Center(child: Text("tab2"));
   }
 }
